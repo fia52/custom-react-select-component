@@ -36,7 +36,6 @@ export default function App() {
 
       <div className="search-bar-container">
             <CustomSelect />
-            <div>CustomSelectResults</div>
         </div>
 
     </div>
