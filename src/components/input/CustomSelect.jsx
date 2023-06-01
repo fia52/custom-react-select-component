@@ -1,10 +1,19 @@
 import React, {useEffect, useState} from 'react';
 
 import {FaSearch} from "react-icons/fa"
-import "./CustomSelect.css"
-import {findAllByDisplayValue} from "@testing-library/react";
+import {ImCross} from "react-icons/im"
+import {RxCross2, RxCross1, RxDividerVertical, RxChevronDown, RxChevronUp} from "react-icons/rx"
 
-const optionList = ["red", "green", "yellow", "blue", "white"];
+import styles from "./CustomSelect.module.css";
+
+
+const optionList = [
+    "Redddddddddddddddddddd", "Greennnnnnnnnnnnn", "Yellow", "Blue", "White",
+    "Red", "Green", "Yellow", "Blue", "White",
+    "Red", "Green", "Yellow", "Blue", "White",
+    "Red", "Green", "Yellow", "Blue", "White",
+    "Red", "Green", "Yellow", "Blue", "White",
+];
 
 const CustomSelect = () => {
 
@@ -13,6 +22,8 @@ const CustomSelect = () => {
     const [input, setInput] = useState("");
 
     const [queryList, setQueryList] = useState([]);
+
+    const [isOpen, setIsOpen] = useState(true);
 
     useEffect(() => {
         console.log(options)    // https://www.youtube.com/watch?v=GNrdg3PzpJQ&ab_channel=UlbiTV 2:07 про оптимизацию путём асинхронного вызова функций
@@ -41,55 +52,78 @@ const CustomSelect = () => {
         }))
     };
 
+    const delAllQuery = () => {
+        setOptions([...options, ...queryList])
+        setQueryList([])
+    }
+
 
     return (
-        <div>
+        <React.Fragment>
 
-            <div className="query-list">
-                {
-                    queryList.map((item) => (
-                        <div className="query-item-container">
-                            <div>
-                                {item}
+            <div className={styles.input_wrapper}>
+                {/*<FaSearch id="search-icon" />*/}
+
+                <div className={styles.query_list}>
+                    {
+                        queryList.map((item) => (
+                            <div className={styles.query_item_container}>
+                                <div>
+                                    {item}
+                                </div>
+                                <div onClick={() => delQueryItem(item)}>
+                                    <RxCross2 className={styles.rx_cross}/>
+                                </div>
                             </div>
-                            <button onClick={() => delQueryItem(item)}>
-                                <p className="str675"></p>
-                            </button>
-                        </div>
-                    ))
-                }
-            </div>
+                        ))
+                    }
+                </div>
 
-            <div className="input-wrapper">
-                <FaSearch id="search-icon" />
                 <input
                     placeholder="Type to search.."
                     value={input}
                     onChange={(e) => handleChange(e.target.value)}
                 />
+
+                <div onClick={() => delAllQuery()}>
+                    <RxCross1 className={styles.rx_big_cross}/>
+                </div>
+
+                <div className={styles.symbolfont}>
+                    <RxDividerVertical className={styles.vertical_line}/>
+                </div>
+
+                <div onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen
+                        ? <RxChevronDown className={styles.carets}  />
+                        : <RxChevronUp className={styles.carets} />
+                    }
+                </div>
             </div>
 
-            <div className="options-list">
-                {
-                    options.filter(option => {
-                        const searchValue = input.toLowerCase()
-                        const optionValue = option.toLowerCase()
+            {(isOpen || input) && (
+                <div className={styles.options_list}>
+                    {
+                        options.filter(option => {
+                            const searchValue = input.toLowerCase()
+                            const optionValue = option.toLowerCase()
 
-                        return optionValue.startsWith(searchValue) && optionValue !== searchValue
-                    })
-                        .map((option, id) => (
-                            <div className="search-result"
-                                 onClick={() => handleOptionCheck(option)}>
+                            return optionValue.includes(searchValue)
+                        })
+                            .map((option, index) => (
+                                <div key = {index} className={styles.search_result}
+                                     onClick={() => handleOptionCheck(option)}>
 
-                            {option}
+                                {option}
 
-                            </div>
+                                </div>
+                            )
                         )
-                    )
-                }
-            </div>
+                    }
+                </div>
+                )}
 
-        </div>
+        </React.Fragment>
     );
 };
 
