@@ -46,15 +46,18 @@ const CustomSelect = () => {
         <div>
 
             <div className="query-list">
-
                 {
                     queryList.map((item) => (
-                    <div onClick={() => delQueryItem(item)}>
-                        {item}
-                    </div>
+                        <div className="query-item-container">
+                            <div>
+                                {item}
+                            </div>
+                            <button onClick={() => delQueryItem(item)}>
+                                <p className="str675"></p>
+                            </button>
+                        </div>
                     ))
                 }
-
             </div>
 
             <div className="input-wrapper">

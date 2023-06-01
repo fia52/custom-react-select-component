@@ -53,3 +53,21 @@ input:focus {
   max-height: 300px;
   overflow-y: auto;
 }
+
+p.str675:after {
+  content: '\2716';
+  border: none;
+}
+
+.query-list {
+  display: flex;
+}
+
+.query-item-container {
+  display: flex;
+  background-color: #efefef;
+  border: aqua;
+  height: 100%;
+  font-size: 1rem;
+  margin-left: 5px;
+}
