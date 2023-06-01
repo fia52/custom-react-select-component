@@ -42,7 +42,7 @@ input:focus {
   background-color: #efefef;
 }
 
-.results-list {
+.options-list {
   width: 100%;
   background-color: white;
   display: flex;

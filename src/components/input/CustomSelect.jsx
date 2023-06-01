@@ -1,66 +1,84 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {FaSearch} from "react-icons/fa"
 import "./CustomSelect.css"
 import {findAllByDisplayValue} from "@testing-library/react";
 
-const optionList = [
-    { value: "red", label: "Red" },
-    { value: "green", label: "Green" },
-    { value: "yellow", label: "Yellow" },
-    { value: "blue", label: "Blue" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-    { value: "white", label: "White" },
-  ];
+const optionList = ["red", "green", "yellow", "blue", "white"];
 
 const CustomSelect = () => {
 
-    const [options, setOptions] = useState(optionList)
+    const [options, setOptions] = useState(optionList);
 
-    const [searchQuery, setSearchQuery] = useState("");
+    const [input, setInput] = useState("");
+
+    const [queryList, setQueryList] = useState([]);
+
+    useEffect(() => {
+        console.log(options)    // https://www.youtube.com/watch?v=GNrdg3PzpJQ&ab_channel=UlbiTV 2:07 про оптимизацию путём асинхронного вызова функций
+    }, [options])
+
+    const handleOptionCheck = (item) => {
+        setInput("")
+        delOption(item)
+        setQueryList(queryList.concat(item))
+    };
 
     const handleChange = (value) => {
-        // setInput(searchQuery.concat(value))}
-        setSearchQuery(value)
+        setInput(value)
     };
+
+    const delOption = (value) => {
+        setOptions(options.filter(option => {
+            return option !== value
+        }))
+    };
+
+    const delQueryItem = (value) => {
+        setOptions([...options, value])
+        setQueryList(queryList.filter(item => {
+            return item !== value
+        }))
+    };
+
 
     return (
         <div>
+
+            <div className="query-list">
+
+                {
+                    queryList.map((item) => (
+                    <div onClick={() => delQueryItem(item)}>
+                        {item}
+                    </div>
+                    ))
+                }
+
+            </div>
 
             <div className="input-wrapper">
                 <FaSearch id="search-icon" />
                 <input
                     placeholder="Type to search.."
-                    value={searchQuery}
+                    value={input}
                     onChange={(e) => handleChange(e.target.value)}
                 />
             </div>
 
-            <div className="results-list">
+            <div className="options-list">
                 {
                     options.filter(option => {
-                        const searchValue = searchQuery.toLowerCase()
-                        const optionValue = option.value.toLowerCase()
+                        const searchValue = input.toLowerCase()
+                        const optionValue = option.toLowerCase()
 
                         return optionValue.startsWith(searchValue) && optionValue !== searchValue
                     })
                         .map((option, id) => (
                             <div className="search-result"
-                                 onClick={(e) => handleChange(option.value)}>
+                                 onClick={() => handleOptionCheck(option)}>
 
-                            {option.value}
+                            {option}
 
                             </div>
                         )
