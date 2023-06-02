@@ -8,10 +8,10 @@ import styles from "./CustomSelect.module.css";
 
 const optionList = [
     "Red", "Green", "Yellow", "Blue", "White",
-    // "Red", "Green", "Yellow", "Blue", "White",
-    // "Red", "Green", "Yellow", "Blue", "White",
-    // "Red", "Green", "Yellow", "Blue", "White",
-    // "Red", "Green", "Yellow", "Blue", "White",
+    "Redd", "Grdeen", "Yelldow", "Bldue", "Whdite",
+    "aRed", "Gareen", "Yelalow", "Balue", "Whiate",
+    "Red", "Green", "Yellow", "Blue", "White",
+    "Red", "Green", "Yellow", "Blue", "White",
 ];
 
 const CustomSelect = () => {
@@ -27,8 +27,13 @@ const CustomSelect = () => {
     const [isOpen, setIsOpen] = useState(true);
 
     useEffect(() => {
-        console.log(options)    // https://www.youtube.com/watch?v=GNrdg3PzpJQ&ab_channel=UlbiTV 2:07 про оптимизацию путём асинхронного вызова функций
-    }, [options])
+        setDropdownOptions(options.filter(option => {
+            const searchValue = input.toLowerCase()
+            const optionValue = option.toLowerCase()
+
+            return optionValue.includes(searchValue) && !queryList.includes(option)
+        }))
+    }, [input, queryList])
 
     const handleOptionCheck = (item) => {
         setInput("")
@@ -92,43 +97,31 @@ const CustomSelect = () => {
                         <RxCross1 className={styles.rx_big_cross}/>
                     </div>
 
-                    <div className={styles.symbolfont}>
+                    <div>
                         <RxDividerVertical className={styles.vertical_line}/>
                     </div>
 
                     <div onClick={() => setIsOpen(!isOpen)}>
-                        {isOpen
+                        {
+                            isOpen
                             ? <RxChevronDown className={styles.carets}/>
                             : <RxChevronUp className={styles.carets}/>
                         }
                     </div>
                 </div>
 
-            {(isOpen || input) && (
-                <div className={styles.dropdown_list}>
-                    {
-                        options.filter(option => {
-                            const searchValue = input.toLowerCase()
-                            const optionValue = option.toLowerCase()
-
-                            return optionValue.includes(searchValue)
-                        })
-                            .map((option, index) => (
-                                <div key = {index} className={styles.search_result}
+                {(isOpen || input) && (
+                    <div className={styles.dropdown_list}>
+                        {
+                            dropdownOptions.map((option, index) => (
+                                <div key={index}
+                                     className={styles.search_result}
                                      onClick={() => handleOptionCheck(option)}>
-
-                                            {option}
-
-                                        </div>
-                                    )
-                                )
+                                    {option}
+                                </div>))
                         }
                     </div>
                 )}
-
-                <div className={styles.text_here}>
-                    text here
-                </div>
 
             </div>
         </ClickAwayListener>

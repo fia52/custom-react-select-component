@@ -7,7 +7,8 @@
 
 .input_wrapper {
   width: 600px;
-  height: 3rem;
+  height: auto;
+  /*height: 3rem;*/
   border: none;
   border-radius: 10px;
   padding: 0 15px;
@@ -43,7 +44,7 @@ input {
 }
 
 .dropdown_list {
-  width: 100%;
+  width: 600px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -72,6 +73,9 @@ input {
 .query_list {
   display: flex;
   flex-wrap: wrap;
+  max-width: 60%;
+  /*max-height: 2rem;*/
+  /*overflow-y: unset;*/
 }
 
 .query_item_container {
@@ -79,7 +83,7 @@ input {
   align-items: center;
   background-color: #efefef;
   height: 1.5rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 5px;
