@@ -11,7 +11,7 @@
   border: none;
   border-radius: 10px;
   padding: 0 15px;
-  box-shadow: 0px 0px 8px #ddd;
+  box-shadow: 0 0 8px #ddd;
   background-color: white;
   display: flex;
   align-items: center;
@@ -24,39 +24,45 @@ input {
   font-size: 1.25rem;
   width: 100%;
   margin-left: 5px;
-}
-
-input:focus {
-  outline: none;
+  outline: none; /* Добавлено для поддержки фокуса */
 }
 
 .carets {
   color: #666965;
   font-size: 1.7rem;
+  cursor: pointer; /* Добавлено для указания возможности нажатия */
 }
 
 .search_result {
   padding: 10px 20px;
+  cursor: pointer; /* Добавлено для указания возможности нажатия */
 }
 
 .search_result:hover {
   background-color: #efefef;
 }
 
-.options_list {
+.dropdown_list {
   width: 100%;
   background-color: white;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 0px 8px #ddd;
+  box-shadow: 0 0 8px #ddd;
   border-radius: 10px;
   margin-top: 1rem;
   max-height: 300px;
   overflow-y: auto;
+  z-index: 10;
+  position: fixed;
+}
+
+.text_here {
+  margin-top: 20px;
 }
 
 .rx_cross {
   margin-left: 5px;
+  cursor: pointer; /* Добавлено для указания возможности нажатия */
 }
 
 .rx_cross:hover {
@@ -66,7 +72,6 @@ input:focus {
 .query_list {
   display: flex;
   flex-wrap: wrap;
-  /*width: 70%;*/
 }
 
 .query_item_container {
@@ -87,6 +92,7 @@ input:focus {
 .rx_big_cross {
   color: #666965;
   font-size: 1.2rem;
+  cursor: pointer; /* Добавлено для указания возможности нажатия */
 }
 
 .rx_big_cross:hover {
